@@ -1,13 +1,5 @@
 
-const drinksContainer=document.querySelector('#your-Drink');
-const randomDrinkContainer= document.querySelector('#drink-of-the-day');
-console.log(randomDrinkContainer)
-const title= document.createElement("h3")
-title.textContent=" My Favortie Drinks"
-const FCon=document.querySelector("#favorite-container")
-FCon.appendChild(title)
-
-function init(){
+function init() {
     getForm()
     getRandomDrink()
     handlesForms()
@@ -15,12 +7,15 @@ function init(){
 
 
 //getting a random drink for Dearler's Choice
-function getRandomDrink(){
+function getRandomDrink() {
      const DCButton = document.querySelector('#DC')
      DCButton.addEventListener('click', handlesRandomDrink)
 }
 
- function handlesRandomDrink(){
+function handlesRandomDrink() {
+    if(form.style.display === "block"){
+        form.style.display = "none"
+    }
      randomDrinkContainer.innerHTML= ''
      document.querySelector("#forms").hidden
      fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php")
@@ -32,7 +27,7 @@ function getRandomDrink(){
  }
 
  function renderSearchDrink(cocktail) {
-     if(randomDrinkContainer.innerHTML) {
+     if (randomDrinkContainer.innerHTML) {
        randomDrinkContainer.innerHTML = '';
    }
    const drinks = rendersDrink(cocktail)
@@ -42,16 +37,17 @@ function getRandomDrink(){
  function renderRandomDrink(cocktail) {
 
     randomDrinkContainer.innerHTML = '';
-    if(drinksContainer.innerHTML) {
+    if (drinksContainer.innerHTML) {
         drinksContainer.innerHTML = '';
     }
     const drinks = rendersDrink(cocktail)
     randomDrinkContainer.appendChild(drinks)
   }
-  
-   
-//load drink unto the page
-   function rendersDrink(cocktail){
+  const drinksContainer = document.querySelector('#your-Drink');
+  const randomDrinkContainer = document.querySelector('#drink-of-the-day'); 
+
+  //load drink unto the page
+   function rendersDrink(cocktail) {
     console.log(cocktail)
     const drink = document.createElement("div")
     drink.id=`${cocktail.idDrink}/* `
@@ -64,8 +60,8 @@ function getRandomDrink(){
 
 // add drinks image
     const img = document.createElement('img')
-    img.src=`${cocktail.strDrinkThumb}`
-    img.alt=`${cocktail.strDrink}`
+    img.src =`${cocktail.strDrinkThumb}`
+    img.alt =`${cocktail.strDrink}`
     drink.appendChild(img)
 //add drinks glass
     const drinkGlass = document.createElement('p')
@@ -73,8 +69,9 @@ function getRandomDrink(){
     drink.appendChild(drinkGlass)
 // adds drink ingredients container
  const  drinkIngredients = document.createElement('ul')
- drinkIngredients.innerHTML= "Ingredients"
+ drinkIngredients.innerHTML = "Ingredients"
 drink.appendChild(drinkIngredients)
+
 function addCocktailI(cocktail) {
           const ingredientsArray = Object.keys(cocktail).filter(function(keyName){
       
@@ -102,7 +99,7 @@ function addCocktailI(cocktail) {
        }) .map(key => cocktail[key]);
        measureArray.forEach(measure => measure)
        
-       function fullI(){
+    function fullI() {
           for ( var i = 0; i < ingredientsArray.length; i++ ){
               if(measureArray[i]){
                   drinkIngredients.innerHTML +=`<li>${ingredientsArray[i]} ${measureArray[i]}</li>`
@@ -117,10 +114,10 @@ function addCocktailI(cocktail) {
    
   
       const drinkInstructions = document.createElement('div')
-      drinkInstructions.innerHTML="Directions"
+      drinkInstructions.innerHTML = "Directions"
       drink.appendChild(drinkInstructions)
   
-      function addInstructions(){
+    function addInstructions() {
       const instructionsArray = Object.keys(cocktail).filter(function(keyName){
       
           if(cocktail[keyName] !== null &&  cocktail[keyName] !=="" && keyName !=="strInstructionsDE" && keyName !=="strInstructionsIT" && keyName.includes('strInstructions')) {
@@ -132,32 +129,53 @@ function addCocktailI(cocktail) {
            )
          } addInstructions()
 
- const myFavoriteButton=document.createElement('button')
- myFavoriteButton.id="favorite"
- myFavoriteButton.innerHTML="Add to Favorties"
- drink.appendChild(myFavoriteButton)
- 
- myFavoriteButton.addEventListener("click",Handlesfavorite)
- 
- function Handlesfavorite(){
-    const div =document.createElement('div')
-    div.innerHTML=`${cocktail.strDrink}`
-    FCon.appendChild(div)
-    
+ function favorites(){
+    const myFavoriteButton=document.createElement('button')
+    myFavoriteButton.id = "favorite"
+    myFavoriteButton.innerHTML = `<i class="fas fa-cocktail"></i> Add to Favorties <i class="fas fa-cocktail"></i> `
+    drink.appendChild(myFavoriteButton)
+    myFavoriteButton.addEventListener("click", Handlesfavorite)
  }
 
-    return drink
+favorites()
+
+function Handlesfavorite() {
+    if(FCon.className === "hidden"){
+        FCon.classList.remove("hidden")
+    }
+    const div =document.createElement('div')
+    const p = document.createElement('p')
+    p.innerHTML=`${cocktail.strDrink}`
+    FCon.appendChild(div)
+    let btn = document.createElement('button')
+    btn.id="remove"
+    btn.addEventListener('click', deleteTask)
+    btn.textContent='remove'
+    const span = document.createElement("span")
+    span.appendChild(btn)
+    p.appendChild(btn)
+    div.appendChild(p)
+ }
+ function deleteTask(task){
+    task.target.parentNode.remove()
+  }
+ 
+
+return drink
 }
 
+const title = document.createElement("h3")
+title.textContent =" Favorties"
+const FCon=document.querySelector("#favorite-container")
+FCon.appendChild(title)
       
- function getForm(){
-    const pypButton = document.querySelector('#pyp') 
+function getForm() {
+    const pypButton = document.querySelector('#pyp')
     return pypButton.addEventListener("click", hideForm)
     
 }
-
- function hideForm(){
-     const form = document.querySelector("#forms")
+const form = document.querySelector("#forms")
+function hideForm() {
      if(form.style.display === "block"){
          form.style.display = "none"
      }
@@ -167,17 +185,20 @@ function addCocktailI(cocktail) {
      }
     }
 
- function handlesForms(){
+function handlesForms() {
      const form = document.getElementById('form')
      form.addEventListener('submit', event =>{
         event.preventDefault()
+        if (drinksContainer.innerHTML) {
+            drinksContainer.innerHTML = '';
+        }
      const cocktailSearch =event.target.search1.value + event.target.search2.value 
      
      fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktailSearch}`)
      .then((resp) =>resp.json())
      .then(data => data.drinks.forEach(renderSearchDrink))
      form.reset()
-    })  
+    })
  }
 
- init()
+init()

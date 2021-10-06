@@ -1,67 +1,101 @@
-html,body{
-    width: 100%;
-    height:100%;
-    margin: 0;
-    background-image: url("images/cocktail6.jpg");
+@media only screen and (max-width: 1500px) {
+    .buttons{
+        font-size: 40px !important;
+    }
+}
+
+body{
+    background-image: url("images/cocktail6.jpg");   
+}
+
+main{
+    display: grid;
+    grid-template-columns: 7fr 1fr; 
+    grid-template-areas: 
+    "title title"
+    "content sidebar"
+    "content2 sidebar"
+    "form form";   
 }
 #title{
-color: red;
-text-align: center;
-margin-top: 10px;
-font-size: 90px;
-letter-spacing: .20mm;
-border:1px solid rgba(234, 240, 240, 0.664);
-font-family: initial;
-
-}
-.mix{
-    text-align: end;
-    background-color: white;
+    grid-area: title;
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 90px;
+    letter-spacing: .20mm;
+    border:1px solid rgba(234, 240, 240, 0.664);
+    font-family: initial;
 }
 .buttons{
     color: red;
     padding: 15px 32px;
     font-size: 60px;
-    margin-left: 18%;
     margin-top: 5%;
     text-align: center;
-    background-image: url("images/cocktail5.jpg");
+    background-image: url("images/cocktail6.jpg");
     font-family: initial;
-
-   
+    border-radius: 20px;
+    margin-left: 60px;
+    }
+#buttons{
+    grid-area: content;
+    text-align: center;
 }
+
 #forms{
+    grid-area: form;
     padding-top: 50px;
     text-align:center;
     font-size: 30px;
-    color: red;
-    margin-right: 7%;
+    color:red;
 }
 img{
     height: 150px;
     width: 150px;
 }
-div{
-    color: red;
+
+#favorite-container{
+    grid-area: sidebar;
+      color: red;
+      overflow: auto; 
+      font-size: 20px;
+      font-family: initial;
+      margin-top: 30%;
+      text-align: center;
+}
+.hidden{
+    display: none;
+}
+#drinks-container{
+    padding-top: 30px;
+    grid-area: content2;
+    color:red;
     font-size: 25px;
     font-family: initial;
     padding-top: 10px;
-    margin: 30px;
-    text-align: center; 
+   text-align: center; 
 }
 
 ul{
     display: inline-block;
 }
 
-#favorite-container{
-    background-color: white;
-    float:right;
-    height:100%;
-    overflow:auto;
-    width: 30%;
-}
 h3{
     color:red;
     text-align: center;
+    font-family: initial;
+    font-size: 30px;
 }
+
+ #favorite{
+     color: red;
+     font-style: initial;
+     background-image: url("images/cocktail6.jpg");
+ }
+
+ #remove{
+    color:red;
+    margin-left: 6px;
+    background-image: url('images/cocktail6.jpg');
+ }
