@@ -3,6 +3,7 @@ function init() {
     getForm()
     getRandomDrink()
     handlesForms()
+    favorties()
 }
 
 
@@ -134,19 +135,19 @@ function addCocktailI(cocktail) {
     myFavoriteButton.id = "favorite"
     myFavoriteButton.innerHTML = `<i class="fas fa-cocktail"></i> Add to Favorties <i class="fas fa-cocktail"></i> `
     drink.appendChild(myFavoriteButton)
-    myFavoriteButton.addEventListener("click", Handlesfavorite)
+    myFavoriteButton.addEventListener("click", handlesfavorite)
  }
 
 favorites()
 
-function Handlesfavorite() {
-    if(FCon.className === "hidden"){
-        FCon.classList.remove("hidden")
+function handlesfavorite() {
+    if(favoriteContainer.className === "hidden"){
+        favoriteContainer.classList.remove("hidden")
     }
     const div =document.createElement('div')
     const p = document.createElement('p')
     p.innerHTML=`${cocktail.strDrink}`
-    FCon.appendChild(div)
+    favoriteContainer.appendChild(div)
     let btn = document.createElement('button')
     btn.id="remove"
     btn.addEventListener('click', deleteTask)
@@ -164,10 +165,14 @@ function Handlesfavorite() {
 return drink
 }
 
+function favorties(){
 const title = document.createElement("h3")
 title.textContent =" Favorties"
-const FCon=document.querySelector("#favorite-container")
-FCon.appendChild(title)
+favoriteContainer.appendChild(title)
+}
+
+const favoriteContainer=document.querySelector("#favorite-container")
+
       
 function getForm() {
     const pypButton = document.querySelector('#pyp')
